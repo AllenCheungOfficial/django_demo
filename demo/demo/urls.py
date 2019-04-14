@@ -26,7 +26,11 @@ urlpatterns = [
     # django默认包含的,这个我们不用关心
     url(r'^admin/', admin.site.urls),
     # 把子路由信息添加到总路由中
-    url(r'users/',include('users.urls',namespace='userspace'))
-    # url(r'^', include('users.urls', namespace='userspace')),
+    # url(r'users/',include('users.urls',namespace='userspace'))
+    url(r'^', include('users.urls', namespace='userspace')),
+    url(r'^', include('reuest.urls', namespace='reuest')),
+    url(r'^', include('response.urls', namespace='response')),
+    url(r'^', include('cook.urls', namespace='cook')),
+    url(r'^', include('session.urls', namespace='session')),
 
 ]

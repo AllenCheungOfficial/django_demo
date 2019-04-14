@@ -47,13 +47,19 @@ INSTALLED_APPS = [
     # 配置的目的：使用当前的子应用能进行数据迁移
     # 将子应用的配置信息文件apps.py中的Config类添加到INSTALLED_APPS列表中。
     'users.apps.UsersConfig',
+    'reuest.apps.ReuestConfig',
+    'response.apps.ResponseConfig',
+    'cook.apps.CookConfig',
+    'session.apps.SessionConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 可以发送请求体数据的请求方式有 POST、PUT、PATCH、DELETE。
+# Django默认开启了CSRF防护，会对上述请求方式进行CSRF防护验证，在测试时可以关闭CSRF防护机制，方法为在settings.py文件中注释掉CSRF中间件
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -135,3 +141,22 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 
 ]
+
+# session存储方式配置
+CACHES = {
+    "default": {
+        # 指定session存储
+        "BACKEND": "django_redis.cache.RedisCache",
+        # 定义django中redis的位置
+        "LOCATION": "redis://192.168.56.134:6379/1",
+        "OPTIONS": {
+            # django使用redis的默认客户端来进行操作.
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+# 我们定义一个cache(本地缓存来存储信息,cahe指定的是redis)
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# 本地的session使用的本地缓存名称是'default', 这个名称就是上面我们配置的caches的名
+# 称"default"
+SESSION_CACHE_ALIAS = "default"

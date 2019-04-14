@@ -16,5 +16,7 @@ urlpatterns = [
     url(r'^index/(\d{4})/$', views.index),
     url(r'^say/$', views.say,name='sayname'),
     url(r'^sayhello/$', views.sayhello),
+    url(r'^req/$',views.req),
+    url(r'^jsonData/$',views.jsonData),
 
 ]
