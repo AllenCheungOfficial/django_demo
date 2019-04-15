@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'response.apps.ResponseConfig',
     'cook.apps.CookConfig',
     'session.apps.SessionConfig',
+    'demoview.apps.DemoviewConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,11 +67,29 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'demo.urls'
+# jinja2联系需要注释
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         # 模板路径，拼接路径
+#         'DIRS': [os.path.join(BASE_DIR, 'templates')], # 此处修改
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+EMPLATES = [
+    {   #替换jinja2
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        # 模板路径，拼接路径
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 此处修改
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,10 +98,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            # utils的文件夹公司自己封装的工具类
+            'environment':'demo.utils.jinja2_env.environment',
         },
     },
 ]
-
 WSGI_APPLICATION = 'demo.wsgi.application'
 
 # Database

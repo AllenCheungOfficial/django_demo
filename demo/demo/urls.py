@@ -32,5 +32,7 @@ urlpatterns = [
     url(r'^', include('response.urls', namespace='response')),
     url(r'^', include('cook.urls', namespace='cook')),
     url(r'^', include('session.urls', namespace='session')),
+    url(r'^', include('demoview.urls')),
+    url(r'^', include('tempdemo.urls')),
 
 ]

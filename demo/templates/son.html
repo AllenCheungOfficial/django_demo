@@ -1,0 +1,13 @@
+{#  标签extends：继承，写在子模板文件的第一行。#}
+{% extends './index.html' %}
+
+
+{# 在子元素中从写了父元素的预留区域#}
+{% block hahahhahah %}
+
+    {#    保留获取父元素#}
+    {{ block.super }}
+
+    {#    把父元素覆盖掉#}
+    <a href="#">子元素</a>
+{% endblock %}

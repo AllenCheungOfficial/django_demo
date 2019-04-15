@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="users.views.rul" />
+          <option value="tempdemo.views.datatime" />
         </list>
       </option>
     </inspection_tool>
