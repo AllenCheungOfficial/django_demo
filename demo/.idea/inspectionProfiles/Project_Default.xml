@@ -6,6 +6,7 @@
         <list>
           <option value="users.views.rul" />
           <option value="tempdemo.views.datatime" />
+          <option value="bootktest.admin.HeroInfoAdmin" />
         </list>
       </option>
     </inspection_tool>

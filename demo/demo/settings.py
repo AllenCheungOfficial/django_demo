@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'cook.apps.CookConfig',
     'session.apps.SessionConfig',
     'demoview.apps.DemoviewConfig',
+    'bootktest.apps.BootktestConfig',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 可以发送请求体数据的请求方式有 POST、PUT、PATCH、DELETE。
-# Django默认开启了CSRF防护，会对上述请求方式进行CSRF防护验证，在测试时可以关闭CSRF防护机制，方法为在settings.py文件中注释掉CSRF中间件
+    # Django默认开启了CSRF防护，会对上述请求方式进行CSRF防护验证，在测试时可以关闭CSRF防护机制，方法为在settings.py文件中注释掉CSRF中间件
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -85,11 +86,10 @@ ROOT_URLCONF = 'demo.urls'
 #     },
 # ]
 
-EMPLATES = [
-    {   #替换jinja2
+TEMPLATES = [
+    {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        # 模板路径，拼接路径
-        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 此处修改
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,8 +98,20 @@ EMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            # utils的文件夹公司自己封装的工具类
-            'environment':'demo.utils.jinja2_env.environment',
+            'environment':'utils.jinja2_env.environment'
+        },
+    },
+{
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
         },
     },
 ]
@@ -108,10 +120,16 @@ WSGI_APPLICATION = 'demo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# 数据库配置
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 我们这里需要把sqlite3修改为mysql
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '127.0.0.1',  # 数据库主机
+        'PORT': '3306',  # 数据库端口
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': 'mysql',  # 数据库用户密码
+        'NAME': 'django_demo',  # 数据库名字
     }
 }
 
@@ -180,3 +198,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # 本地的session使用的本地缓存名称是'default', 这个名称就是上面我们配置的caches的名
 # 称"default"
 SESSION_CACHE_ALIAS = "default"
+
+ # 图片保存的位置:
+# 我们保存在static_files下面的media文件夹下:
+MEDIA_ROOT=os.path.join(BASE_DIR,"static/media")
